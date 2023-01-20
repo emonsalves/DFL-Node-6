@@ -4,8 +4,7 @@
   "description": "Node with JWT",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon ./app.js",
-    "start": "node --watch ./app.js"
+    "dev": "nodemon ./app.js"
   },
   "repository": {
     "type": "git",
