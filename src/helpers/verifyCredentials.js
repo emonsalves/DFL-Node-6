@@ -14,7 +14,8 @@ const verifyCredentials = async (email, password) => {
             throw { code: 404, message: "No se encontro ningun usuario con estas credenciales" }
         return true
     } catch (error) {
-        throw new Error(e)
+        throw "Error Veryfication Credentials"
+
     }
 }
 
