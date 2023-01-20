@@ -6,7 +6,7 @@ const jwtSign = (payload) => {
     try {
         return jwt.sign(payload, JWT_SECRET)
     } catch (error) {
-        throw new Error("jwtsign")
+        throw { code: 401, message: "Error to Sign JWT" }
     }
 }
 
@@ -17,7 +17,8 @@ const jwtValidation = (req, res, next) => {
         jwt.verify(jwtToken, JWT_SECRET)
         next()
     } catch (error) {
-        throw new Error(error)
+        throw { code: 401, message: "Error Validation Credentials" }
+
     }
 }
 
@@ -27,7 +28,7 @@ const jwtDecode = (token) => {
         const tokenDecode = jwt.decode(jwtToken)
         return tokenDecode
     } catch (error) {
-        throw new Error(error)
+        throw { code: 401, message: "Error to Decode JWT" }
     }
 }
 

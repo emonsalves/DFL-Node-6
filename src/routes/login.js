@@ -2,9 +2,10 @@ const express = require('express')
 
 const router = express.Router()
 const { verifyCredentials } = require('../helpers/verifyCredentials')
+const { checkRequest } = require('../middlewares/checkRequest')
 const { jwtSign } = require('../middlewares/jwt')
 
-router.post('', async (req, res) => {
+router.post('', checkRequest, async (req, res) => {
     try {
         const { email, password } = req.body
         await verifyCredentials(email, password)

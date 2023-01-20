@@ -4,7 +4,7 @@ const encrypt = (key) => {
     try {
         return bcrypt.hashSync(key)
     } catch (error) {
-        throw new Error(e)
+        throw { code: 401, message: "Error Encrypt" }
     }
 }
 
@@ -12,7 +12,8 @@ const decrypt = (key, encryptKey) => {
     try {
         return bcrypt.compareSync(key, encryptKey)
     } catch (error) {
-        throw new Error(e)
+        throw { code: 401, message: "Error Descrypt" }
+
     }
 }
 
