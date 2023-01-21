@@ -1,5 +1,5 @@
-const pool = require("./connectionDb").getInstance();
-const { decrypt } = require("./encrypting");
+const pool = require("../helpers/connectionDb").getInstance();
+const { decrypt } = require("../helpers/encrypting");
 
 const verifyCredentials = async (email, password) => {
     try {
