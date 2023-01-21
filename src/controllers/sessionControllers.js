@@ -11,11 +11,11 @@ const sessionCheck = async (req, res) => {
         if (user === undefined) {
             res.status(500).send("Error User Not Found")
         } else {
-            const decryptKey = await decrypt(password, user.password)
+            const decryptKey = decrypt(password, user.password)
             if (decryptKey === false) {
                 res.status(500).send("Error Token decrypt")
             } else {
-                const tokenJwt = jwtSign({ email })
+                const tokenJwt = await jwtSign({ email })
                 res.status(200).send(tokenJwt)
             }
         }

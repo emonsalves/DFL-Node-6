@@ -3,11 +3,22 @@ const jwt = require("jsonwebtoken")
 const JWT_SECRET = process.env.JWT_SECRET
 
 const jwtSign = (payload) => {
-    try {
-        return jwt.sign(payload, JWT_SECRET)
-    } catch (error) {
-        throw { code: 401, message: "Error to Sign JWT" }
-    }
+    // try {
+        return new Promise((resolve, reject) => {
+          
+            // const options = {
+            //     expiresIn: '1h'
+            // }
+            // jwt.sign(payload, JWT_SECRET, options, (err, payload)=>{
+            jwt.sign(payload, JWT_SECRET, (err, payload) => {
+                if (err) reject(err)
+                resolve(payload)
+            })
+        })
+    // } catch (error) {
+    //     throw { code: 401, message: "Error to Sign JWT" }
+    // }
+    // mejor en promise para el rendimiento de alto flujo
 }
 
 const jwtValidation = (req, res, next) => {
@@ -18,7 +29,6 @@ const jwtValidation = (req, res, next) => {
         next()
     } catch (error) {
         throw { code: 401, message: "Error Validation Credentials" }
-
     }
 }
 

@@ -9,9 +9,9 @@ const encrypt = (key) => {
     }
 }
 
-const decrypt = async (key, encryptKey) => {
+const decrypt = (key, encryptKey) => {
     try {
-        const test = await bcrypt.compareSync(key, encryptKey)
+        const test =  bcrypt.compareSync(key, encryptKey)
         return test
     } catch (error) {
         throw ("Error Descrypt")
