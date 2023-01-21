@@ -9,7 +9,7 @@ const createUser = async (payload) => {
         const results = await pool.query(SQLquery)
         return results.rows
     } catch (error) {
-        throw new Error(e);
+        throw { code: 404, message: "Error create user query" }
     }
 }
 
@@ -22,8 +22,22 @@ const getUser = async (payload) => {
         const results = await pool.query(SQLquery)
         return results.rows[0]
     } catch (error) {
-        throw new Error(e)
+        throw { code: 404, message: "Error get user query" }
+
     }
 }
 
-module.exports = { createUser, getUser }
+const getUserKey = async (payload) => {
+    SQLquery = {
+        text: "SELECT email, password FROM usuarios WHERE email = $1",
+        values: [payload]
+    }
+    try {
+        const results = await pool.query(SQLquery)
+        return results.rows[0]
+    } catch (error) {
+        throw { code: 404, message: "Error get userKey query" }
+    }
+}
+
+module.exports = { createUser, getUser, getUserKey }
