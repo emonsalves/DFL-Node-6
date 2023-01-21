@@ -1,6 +1,10 @@
 const { Pool } = require("pg");
 const { config } = require('../config/configDB.js')
+
 // patron Singleton instance con IFE
+// recordar que permite una instancia de lo contrario usar Pool
+// al ser un aplicativo basico no hay problema
+
 const Singleton = (() => {
   let instance;
   function createInstance() {
