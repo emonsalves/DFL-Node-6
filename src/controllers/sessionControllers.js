@@ -1,15 +1,27 @@
+const { decrypt } = require("../helpers/encrypting")
 const { jwtSign } = require("../middlewares/jwt")
-const { verifyCredentials } = require("../models/sessionModels")
+const { getUserKey } = require("../models/usersModels")
 
 const sessionCheck = async (req, res) => {
+    const { email, password } = req.body
+    email.toLowerCase()
+    password.toLowerCase()
     try {
-        const { email, password } = req.body
-        await verifyCredentials (email, password)
-        const token = jwtSign({ email })
-        res.status(200).send(token)
+        const user = await getUserKey(email)
+        if (user === undefined) {
+            res.status(500).send("Error User Not Found")
+        } else {
+            const decryptKey = await decrypt(password, user.password)
+            if (decryptKey === false) {
+                res.status(500).send("Error Token decrypt")
+            } else {
+                const tokenJwt = jwtSign({ email })
+                res.status(200).send(tokenJwt)
+            }
+        }
     } catch (error) {
         res.status(error.code || 500).send(error)
     }
 }
-
 module.exports = { sessionCheck }
+
